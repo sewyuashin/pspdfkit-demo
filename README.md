@@ -4,16 +4,17 @@ This is a demo project showcasing the integration of PSPDFKit with Next.js, demo
 
 ## Features
 
-- PDF document viewing
-- Responsive layout
-- Modern UI with Next.js and Tailwind CSS
-- TypeScript support
+- PDF document viewing with PSPDFKit
+- Responsive layout with Tailwind CSS
+- Modern UI with Next.js App Router
+- Full TypeScript support
+- Automatic deployment with Vercel
 
 ## Prerequisites
 
 Before you begin, ensure you have installed:
-- Node.js (version 16.x or higher)
-- npm (version 8.x or higher)
+- Node.js (version 18.x)
+- npm (version 10.x)
 
 ## Installation
 

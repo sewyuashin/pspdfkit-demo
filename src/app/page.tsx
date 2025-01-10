@@ -1,32 +1,42 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import type PSPDFKit from 'pspdfkit';
 
-const App: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const instanceRef = useRef<any>(null);
 
   useEffect(() => {
     const container = containerRef.current;
 
-    if (container && typeof window !== 'undefined') {
-      import('pspdfkit').then((PSPDFKit) => {
-        const instance = PSPDFKit.default;
-        
-        if (instance) {
-          instance.unload(container);
+    const loadPSPDFKit = async () => {
+      if (container) {
+        // Dynamically import PSPDFKit
+        const PSPDFKit = await import('pspdfkit');
+
+        // Unload any existing instance
+        if (instanceRef.current) {
+          PSPDFKit.default.unload(container);
         }
 
-        instance.load({
-          container,
-          document: '/pspdfkit-web-demo.pdf',
-          baseUrl: `${window.location.protocol}//${window.location.host}/`,
-        }).catch(console.error);
-      });
-    }
+        // Load the PDF viewer
+        try {
+          instanceRef.current = await PSPDFKit.default.load({
+            container,
+            document: '/pspdfkit-demo/pspdfkit-web-demo.pdf',
+            baseUrl: '/pspdfkit-demo/pspdfkit-lib'
+          });
+        } catch (error) {
+          console.error('Error loading PSPDFKit:', error);
+        }
+      }
+    };
 
+    loadPSPDFKit();
+
+    // Cleanup on unmount
     return () => {
-      if (container) {
+      if (container && instanceRef.current) {
         import('pspdfkit').then((PSPDFKit) => {
           PSPDFKit.default.unload(container);
         });
@@ -34,7 +44,9 @@ const App: React.FC = () => {
     };
   }, []);
 
-  return <div ref={containerRef} style={{ height: '100vh' }} />;
-};
-
-export default App;
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-4">
+      <div className="w-full h-screen" ref={containerRef} />
+    </main>
+  );
+}

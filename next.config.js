@@ -1,15 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
-  webpack: (config) => {
-    // Load worker files as a URLs by using asset modules
-    config.module.rules.push({
-      test: /\.wasm$/,
-      type: 'asset/resource',
-    });
-
-    return config;
+  output: 'export',
+  images: {
+    unoptimized: true,
   },
+  basePath: '/pspdfkit-demo',
+  assetPrefix: '/pspdfkit-demo/',
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.worker\.(js|ts)$/,
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/[hash][ext][query]'
+      }
+    });
+    return config;
+  }
 }
 
 module.exports = nextConfig 
