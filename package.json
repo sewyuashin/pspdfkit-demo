@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=18.17.0"
+    "node": "18.x",
+    "npm": "10.x"
   },
   "scripts": {
     "dev": "next dev",
@@ -27,5 +28,9 @@
     "postcss": "8.4.35",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3"
+  },
+  "overrides": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
