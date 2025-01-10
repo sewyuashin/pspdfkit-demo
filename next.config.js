@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   webpack: (config) => {
-    config.resolve.alias.canvas = false;
-    config.resolve.alias.encoding = false;
-    return config;
-  }
-};
+    // Load worker files as a URLs by using asset modules
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: 'asset/resource',
+    });
 
-module.exports = nextConfig; 
+    return config;
+  },
+}
+
+module.exports = nextConfig 
