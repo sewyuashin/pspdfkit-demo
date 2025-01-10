@@ -19,7 +19,7 @@ Before you begin, ensure you have installed:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/sewyu/pspdfkit-demo.git
+git clone https://github.com/sewyuashin/pspdfkit-demo.git
 cd pspdfkit-demo
 ```
 
